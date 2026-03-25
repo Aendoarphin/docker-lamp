@@ -1,0 +1,25 @@
+services:
+  # apache php
+  web:
+    build: .
+    container_name: lamp-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - db
+  # mariadb
+  db:
+    image: mariadb:10.11
+    container_name: lamp-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
